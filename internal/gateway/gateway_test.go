@@ -179,6 +179,10 @@ func TestGatewayLifecyclePUT_GET_Range_Delete(t *testing.T) {
 	// GET after DELETE returns 404 NoSuchKey
 	req, _ = http.NewRequest(http.MethodGet, h.gwServ.URL+"/testbucket/largefile.bin", nil)
 	resp, err = client.Do(req)
+	if err != nil {
+		t.Fatalf("GET after delete failed: %v", err)
+	}
+	_ = resp.Body.Close()
 	if resp.StatusCode != http.StatusNotFound {
 		t.Fatalf("expected 404 after delete marker, got %d", resp.StatusCode)
 	}

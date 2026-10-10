@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/hiroshi-os/shardvault/internal/ec"
@@ -51,12 +50,6 @@ var (
 			Help: "Total stripe reconstructions performed",
 		},
 	)
-	metricStripesAtRisk = promauto.NewGauge(
-		prometheus.GaugeOpts{
-			Name: "stripes_at_risk",
-			Help: "Number of stripes with fewer than k+m healthy shards",
-		},
-	)
 	metricNodeErrors = promauto.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "node_errors_total",
@@ -88,10 +81,6 @@ type Gateway struct {
 
 	scrubFunc ScrubFunc
 	gcFunc    GCFunc
-
-	// Node latency stats for dynamic hedging (default p95 or floor)
-	nodeStatsMu sync.RWMutex
-	nodeLatP95  map[string]time.Duration
 }
 
 func New(cfg Config, meta *metadata.Store) (*Gateway, error) {
@@ -136,7 +125,6 @@ func New(cfg Config, meta *metadata.Store) (*Gateway, error) {
 		codec:      codec,
 		hrw:        hrw,
 		httpClient: client,
-		nodeLatP95: make(map[string]time.Duration),
 	}, nil
 }
 

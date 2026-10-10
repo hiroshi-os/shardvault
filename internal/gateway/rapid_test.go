@@ -12,7 +12,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
@@ -32,7 +31,6 @@ type rapidCluster struct {
 	meta    *metadata.Store
 	scrub   *scrubber.Scrubber
 	dirs    []string
-	mu      sync.Mutex
 }
 
 func newRapidCluster(t *testing.T, k, m, quorum int) *rapidCluster {

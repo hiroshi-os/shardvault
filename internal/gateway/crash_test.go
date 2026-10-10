@@ -49,7 +49,6 @@ func TestGatewayCrashSIGKILL(t *testing.T) {
 
 	// Spin up 6 storage nodes
 	numNodes := 6
-	var nodes []*node.Node
 	var nodeServers []*httptest.Server
 	var nodeURLs []string
 	var nodeDirs []string
@@ -65,7 +64,6 @@ func TestGatewayCrashSIGKILL(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		nodes = append(nodes, n)
 
 		serv := httptest.NewServer(n.Handler())
 		nodeServers = append(nodeServers, serv)
