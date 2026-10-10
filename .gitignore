@@ -1,0 +1,20 @@
+# Binaries
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts and coverage
+*.out
+*.test
+coverage.txt
+
+# Local data dirs
+data/
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
