@@ -14,7 +14,7 @@ This document records the measured performance, durability, and chaos testing re
 | **Storage / Disk** | SOLIDIGM SSDPFKNU512GZH 512 GB NVMe SSD (Local shared NVMe filesystem) |
 | **Go Toolchain** | Go 1.22.4 `windows/amd64` |
 | **Date** | 2026-10-10 16:50:00 +05:30 (IST) |
-| **Git Commit SHA** | `f205e3a` (clean tree) |
+| **Git Commit SHA** | `6a24d39` (clean tree) |
 
 > **Caveat / Note**: All 6 storage nodes and the gateway ran as concurrent processes on a single host sharing one NVMe SSD and local loopback TCP network. In a distributed multi-node production deployment with dedicated NICs and independent storage media per node, I/O bottlenecks and fsync serialization would differ.
 
