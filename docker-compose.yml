@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    environment:
+      - SV_LISTEN_ADDR=:8080
+      - SV_METRICS_ADDR=:9090
+      - SV_DATA_DIR=/data/gateway
+      - SV_STORAGE_NODES=http://storagenode1:8081,http://storagenode2:8082,http://storagenode3:8083,http://storagenode4:8084,http://storagenode5:8085,http://storagenode6:8086
+      - SV_K=4
+      - SV_M=2
+      - SV_WRITE_QUORUM=5
+    volumes:
+      - gw_data:/data/gateway
+    depends_on:
+      - storagenode1
+      - storagenode2
+      - storagenode3
+      - storagenode4
+      - storagenode5
+      - storagenode6
+
+  storagenode1:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8081:8081"
+    environment:
+      - SV_LISTEN_ADDR=:8081
+      - SV_DATA_DIR=/data/node1
+    volumes:
+      - node1_data:/data/node1
+
+  storagenode2:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8082:8082"
+    environment:
+      - SV_LISTEN_ADDR=:8082
+      - SV_DATA_DIR=/data/node2
+    volumes:
+      - node2_data:/data/node2
+
+  storagenode3:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8083:8083"
+    environment:
+      - SV_LISTEN_ADDR=:8083
+      - SV_DATA_DIR=/data/node3
+    volumes:
+      - node3_data:/data/node3
+
+  storagenode4:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8084:8084"
+    environment:
+      - SV_LISTEN_ADDR=:8084
+      - SV_DATA_DIR=/data/node4
+    volumes:
+      - node4_data:/data/node4
+
+  storagenode5:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8085:8085"
+    environment:
+      - SV_LISTEN_ADDR=:8085
+      - SV_DATA_DIR=/data/node5
+    volumes:
+      - node5_data:/data/node5
+
+  storagenode6:
+    build:
+      context: .
+      dockerfile: Dockerfile.storagenode
+    ports:
+      - "8086:8086"
+    environment:
+      - SV_LISTEN_ADDR=:8086
+      - SV_DATA_DIR=/data/node6
+    volumes:
+      - node6_data:/data/node6
+
+volumes:
+  gw_data:
+  node1_data:
+  node2_data:
+  node3_data:
+  node4_data:
+  node5_data:
+  node6_data:
